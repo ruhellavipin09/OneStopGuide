@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Stop Guidance</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #3b82f6;
+            --primary-green: #10b981;
+            --secondary-green: #34d399;
+            --white: #ffffff;
+            --light-bg: #f9fafb;
+            --dark-bg: #1f2937;
+            --text-dark: #1f2937;
+            --text-light: #f9fafb;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --radius: 15px;
+            --radius-lg: 20px;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Roboto', Arial, sans-serif;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section {
+            padding: 5rem 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        header.shrink {
+            padding: 0.5rem 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        /* Home Section */
+        #home {
+            padding-top: 8rem;
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(16, 185, 129, 0.1));
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .flip-card-container {
+            perspective: 1000px;
+            margin: 2rem 0;
+            width: 300px;
+            height: 200px;
+        }
+
+        .flip-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flip-card-container:hover .flip-card {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--white);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            opacity: 0.2;
+        }
+
+        .shape:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: -50px;
+            left: -50px;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            bottom: 50px;
+            right: -50px;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 150px;
+            left: 50px;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-content h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .info-box:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .info-box i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Features Section */
+        #features {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Careers Section */
+        #careers {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+        }
+
+        .search-bar {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-input {
+            padding: 0.8rem 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            font-size: 1rem;
+        }
+
+        .careers-grid, .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .career-card, .course-card {
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            background: var(--white);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            transform-style: preserve-3d;
+        }
+
+        .career-card:hover, .course-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .career-card h3, .course-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .career-card p, .course-card p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        /* Mentorship Section */
+        #mentorship {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+        }
+
+        .mentorship-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .mentor-form {
+            padding: 2rem;
+            border-radius: var(--radius);
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .mentor-profiles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .mentor-card {
+            position: relative;
+            height: 250px;
+            perspective: 1000px;
+        }
+
+        .mentor-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .mentor-card:hover .mentor-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .mentor-card-front, .mentor-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+        }
+
+        .mentor-card-front {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--white);
+        }
+
+        .mentor-card-back {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-form {
+            padding: 2rem;
+            border-radius: var(--radius);
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info {
+            padding: 2rem;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .map-placeholder {
+            height: 200px;
+            background-color: #ddd;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-bg));
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.5); }
+        }
+
+        .glow-animation {
+            animation: glow 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-container,
+            .features-container,
+            .careers-grid,
+            .courses-grid,
+            .mentorship-container,
+            .mentor-profiles,
+            .contact-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                gap: 0;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 1rem 0;
+            }
+
+            .about-container,
+            .features-container,
+            .careers-grid,
+            .courses-grid,
+            .mentorship-container,
+            .mentor-profiles,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .info-boxes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <a href="#home" class="logo">OneStop Guidance</a>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#features" class="nav-link">Features</a></li>
+                <li class="nav-item"><a href="#careers" class="nav-link">Careers</a></li>
+                <li class="nav-item"><a href="#mentorship" class="nav-link">Mentorship</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="animated-bg">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container hero">
+            <h1>Your Career, One Platform</h1>
+            <p>Discover your path to success with comprehensive guidance for careers and education all in one place.</p>
+            <div class="hero-buttons">
+                <a href="#careers" class="btn glow-animation">Explore Careers</a>
+                <a href="#mentorship" class="btn">Get Started</a>
+            </div>
+            <div class="flip-card-container">
+                <div class="flip-card">
+                    <div class="flip-card-front">
+                        <h3>Our Vision</h3>
+                        <p>Empowering individuals to achieve their career dreams</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Our Mission</h3>
+                        <p>Providing comprehensive guidance and resources for career success</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About One-Stop Guidance</h2>
+            <div class="about-container">
+                <div class="about-image glass">
+                    <div style="height: 300px; background: linear-gradient(135deg, var(--primary-blue), var(--primary-green)); opacity: 0.7; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                        Platform Image
+                    </div>
+                </div>
+                <div class="about-content">
+                    <h2>We Guide Your Future</h2>
+                    <p>One-Stop Guidance is a comprehensive platform designed to help individuals navigate their career and educational journeys. We provide resources, mentorship, and tools to help you make informed decisions about your future.</p>
+                    <p>Our platform brings together career recommendations, course finder, and mentorship opportunities in one convenient place.</p>
+                    <div class="info-boxes">
+                        <div class="info-box">
+                            <i>✓</i>
+                            <h3>Expert Guidance</h3>
+                            <p>Get advice from industry professionals</p>
+                        </div>
+                        <div class="info-box">
+                            <i>✓</i>
+                            <h3>Comprehensive Resources</h3>
+                            <p>Access to extensive career and education materials</p>
+                        </div>
+                        <div class="info-box">
+                            <i>✓</i>
+                            <h3>Personalized Approach</h3>
+                            <p>Tailored recommendations based on your profile</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="btn" style="margin-top: 2rem;">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Career Discovery</h3>
+                    <p>Explore various career paths that match your skills, interests, and goals with our comprehensive discovery tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Course Finder</h3>
+                    <p>Find the perfect educational courses and programs to advance your career and achieve your professional objectives.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Mentorship Program</h3>
+                    <p>Connect with experienced professionals who can guide you through your career journey and provide valuable insights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Skill Assessment</h3>
+                    <p>Evaluate your current skills and identify areas for improvement with our comprehensive assessment tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Career Planning</h3>
+                    <p>Create a personalized career plan with actionable steps to reach your professional goals efficiently.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Job Market Insights</h3>
+                    <p>Stay informed about current job market trends, in-demand skills, and emerging career opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section id="careers" class="section">
+        <div class="container">
+            <h2 class="section-title">Career Recommendations</h2>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search for careers...">
+            </div>
+            <div class="careers-grid">
+                <div class="career-card">
+                    <h3>Software Developer</h3>
+                    <p>Design, develop, and test software and applications for computers and other devices.</p>
+                    <a href="#" class="btn learn-more-btn">Learn More</a>
+                </div>
+                <div class="career-card">
+                    <h3>Data Scientist</h3>
+                    <p>Analyze and interpret complex data to help organizations make informed decisions.</p>
+                    <a href="#" class="btn learn-more-btn">Learn More</a>
+                </div>
+                <div class="career-card">
+                    <h3>Digital Marketer</h3>
+                    <p>Promote brands and products through digital channels to connect with potential customers.</p>
+                    <a href="#" class="btn learn-more-btn">Learn More</a>
+                </div>
+                <div class="career-card">
+                    <h3>Healthcare Administrator</h3>
+                    <p>Manage operations and services in healthcare facilities to ensure quality patient care.</p>
+                    <a href="#" class="btn learn-more-btn">Learn More</a>
+                </div>
+                <div class="career-card">
+                    <h3>Financial Analyst</h3>
+                    <p>Assess financial data and trends to provide guidance for business investment decisions.</p>
+                    <a href="#" class="btn learn-more-btn">Learn More</a>
+                </div>
+                <div class="career-card">
+                    <h3>UX Designer</h3>
+                    <p>Create meaningful and relevant experiences for users of products and services.</p>
+                    <a href="#" class="btn learn-more-btn">Learn More</a>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 4rem;">Course Finder</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <h3>Web Development Bootcamp</h3>
+                    <p>Duration: 12 weeks</p>
+                    <p>Learn full-stack web development with modern technologies.</p>
+                    <a href="#" class="btn apply-btn">Apply Now</a>
+                </div>
+                <div class="course-card">
+                    <h3>Data Science Fundamentals</h3>
+                    <p>Duration: 16 weeks</p>
+                    <p>Master the essentials of data analysis and machine learning.</p>
+                    <a href="#" class="btn apply-btn">Apply Now</a>
+                </div>
+                <div class="course-card">
+                    <h3>Digital Marketing Certification</h3>
+                    <p>Duration: 8 weeks</p>
+                    <p>Learn strategies for SEO, social media, and content marketing.</p>
+                    <a href="#" class="btn apply-btn">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentorship Section -->
+    <section id="mentorship" class="section">
+        <div class="container">
+            <h2 class="section-title">Mentorship</h2>
+            <div class="mentorship-container">
+                <div class="mentor-form glass">
+                    <h3>Request a Mentor</h3>
+                    <form id="mentor-form">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" id="name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="goal" class="form-label">Career Goal</label>
+                            <select id="goal" class="form-input" required>
+                                <option value="">Select your goal</option>
+                                <option value="career-change">Career Change</option>
+                                <option value="skill-development">Skill Development</option>
+                                <option value="job-search">Job Search</option>
+                                <option value="leadership">Leadership Growth</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Submit Request</button>
+                    </form>
+                </div>
+                <div class="mentor-profiles">
+                    <div class="mentor-card">
+                        <div class="mentor-card-inner">
+                            <div class="mentor-card-front">
+                                <div class="mentor-avatar">JD</div>
+                                <h3>John Doe</h3>
+                                <p>Software Engineering</p>
+                            </div>
+                            <div class="mentor-card-back">
+                                <h3>John Doe</h3>
+                                <p>10+ years experience in software development at tech companies. Specialized in backend systems and cloud architecture.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mentor-card">
+                        <div class="mentor-card-inner">
+                            <div class="mentor-card-front">
+                                <div class="mentor-avatar">JS</div>
+                                <h3>Jane Smith</h3>
+                                <p>Data Science</p>
+                            </div>
+                            <div class="mentor-card-back">
+                                <h3>Jane Smith</h3>
+                                <p>Data scientist with expertise in machine learning and predictive analytics. Worked with Fortune 500 companies.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mentor-card">
+                        <div class="mentor-card-inner">
+                            <div class="mentor-card-front">
+                                <div class="mentor-avatar">RJ</div>
+                                <h3>Robert Johnson</h3>
+                                <p>Digital Marketing</p>
+                            </div>
+                            <div class="mentor-card-back">
+                                <h3>Robert Johnson</h3>
+                                <p>Marketing director with 15+ years experience growing brands through digital channels and content strategy.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mentor-card">
+                        <div class="mentor-card-inner">
+                            <div class="mentor-card-front">
+                                <div class="mentor-avatar">SW</div>
+                                <h3>Sarah Williams</h3>
+                                <p>Healthcare Management</p>
+                            </div>
+                            <div class="mentor-card-back">
+                                <h3>Sarah Williams</h3>
+                                <p>Healthcare administrator with expertise in hospital management and healthcare policy development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-form glass">
+                    <h3>Send us a Message</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="contact-name" class="form-label">Your Name</label>
+                            <input type="text" id="contact-name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email" class="form-label">Email Address</label>
+                            <input type="email" id="contact-email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" class="form-input" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>We'd love to hear from you! Reach out to us with any questions or feedback.</p>
+                    <div class="contact-details">
+                        <p><strong>Email:</strong> info@onestopguidance.com</p>
+                        <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                        <p><strong>Address:</strong> 123 Education Street, Career City, CC 12345</p>
+                    </div>
+                    <div class="map-placeholder">
+                        Interactive Map Placeholder
+                    </div>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">t</a>
+                        <a href="#" class="social-icon">in</a>
+                        <a href="#" class="social-icon">ig</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 One-Stop Guidance. All rights reserved.</p>
+                <p>Your career journey starts here.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top">↑</a>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation functionality
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const header = document.querySelector('header');
+            const backToTop = document.querySelector('.back-to-top');
+
+            // Show/hide sections based on hash
+            function showSection() {
+                const hash = window.location.hash || '#home';
+                
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === hash) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                document.querySelector(hash).classList.add('active');
+                
+                // Close mobile menu when a link is clicked
+                if(navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            }
+
+            // Initial section show
+            showSection();
+            
+            // Hash change event
+            window.addEventListener('hashchange', showSection);
+            
+            // Mobile menu toggle
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // Header shrink on scroll
+            window.addEventListener('scroll', function() {
+                if(window.scrollY > 50) {
+                    header.classList.add('shrink');
+                    backToTop.classList.add('visible');
+                } else {
+                    header.classList.remove('shrink');
+                    backToTop.classList.remove('visible');
+                }
+            });
+            
+            // Form submissions
+            document.getElementById('mentor-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Demo only, no data sent.');
+                this.reset();
+            });
+            
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Demo only, no data sent.');
+                this.reset();
+            });
+            
+            // Modal functionality for career and course cards
+            const learnMoreBtns = document.querySelectorAll('.learn-more-btn');
+            const applyBtns = document.querySelectorAll('.apply-btn');
+            
+            learnMoreBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const careerTitle = this.parentElement.querySelector('h3').textContent;
+                    alert(`More information about: ${careerTitle}\n\nThis is a demo. In a real application, this would show detailed information.`);
+                });
+            });
+            
+            applyBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const courseTitle = this.parentElement.querySelector('h3').textContent;
+                    alert(`Application for: ${courseTitle}\n\nThis is a demo. In a real application, this would open an application form.`);
+                });
+            });
+            
+            // Simple search filter
+            const searchInput = document.querySelector('.search-input');
+            const careerCards = document.querySelectorAll('.career-card');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                careerCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    
+                    if(title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

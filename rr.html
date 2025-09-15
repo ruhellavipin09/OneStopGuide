@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Creative Team Flip Cards</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #d4f8e8, #cce7ff);
+      margin: 0;
+      padding: 50px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 50px;
+      color: #004d40;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Team Container with Gradient */
+    .team-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Team Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 50px; /* more gap between cards */
+    }
+
+    /* Flip Card Container */
+    .flip-card {
+      perspective: 1200px;
+      height: 360px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.9s ease;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* Front & Back Design */
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+
+      /* Blur + Glass effect */
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      /* Shadow */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .flip-card-front {
+      background: rgba(224, 255, 239, 0.6);
+      color: #004d40;
+      transition: 0.3s;
+    }
+
+    .flip-card-front:hover {
+      box-shadow: 0 0 25px rgba(0, 183, 195, 0.7);
+    }
+
+    .flip-card-back {
+      background: rgba(0, 119, 182, 0.7);
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    /* Profile Images */
+    .team-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 4px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    .flip-card-front h3, .flip-card-back h3 {
+      margin: 10px 0 5px;
+      font-size: 1.2em;
+    }
+
+    .flip-card-front p {
+      font-size: 0.9em;
+      color: #333;
+    }
+
+    .flip-card-back p {
+      font-size: 0.9em;
+      color: #f0f0f0;
+      line-height: 1.4em;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Our Creative Team</h2>
+  <div class="team-container">
+    <div class="team-grid">
+
+      <!-- Member 1 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="John Smith" class="team-img">
+            <h3>John Smith</h3>
+            <p>Founder & CEO</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>John Smith</h3>
+            <p>Visionary leader with 10+ years in AI and career development, shaping the future of digital learning.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://randomuser.me/api/portraits/women/25.jpg" alt="Emily Davis" class="team-img">
+            <h3>Emily Davis</h3>
+            <p>Chief Technology Officer</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Emily Davis</h3>
+            <p>Expert in AI-driven education platforms, driving technical excellence and innovation in digital ecosystems.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Michael Lee" class="team-img">
+            <h3>Michael Lee</h3>
+            <p>Head of Design</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Michael Lee</h3>
+            <p>Creative designer with a passion for futuristic UI/UX, blending beauty and functionality seamlessly.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member 4 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://randomuser.me/api/portraits/women/64.jpg" alt="Sarah Johnson" class="team-img">
+            <h3>Sarah Johnson</h3>
+            <p>Marketing Lead</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Sarah Johnson</h3>
+            <p>Innovative marketing strategist helping learners connect with opportunities through campaigns and insights.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member 5 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="David Wilson" class="team-img">
+            <h3>David Wilson</h3>
+            <p>AI Specialist</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>David Wilson</h3>
+            <p>Machine learning researcher specializing in predictive analytics and cutting-edge intelligent systems.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member 6 -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Anna Brown" class="team-img">
+            <h3>Anna Brown</h3>
+            <p>Community Manager</p>
+          </div>
+          <div class="flip-card-back">
+            <h3>Anna Brown</h3>
+            <p>Building supportive and engaging communities, ensuring meaningful interaction between learners worldwide.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

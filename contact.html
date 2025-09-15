@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #d4f8e8, #cce7ff);
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .contact-form {
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .contact-form h2 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 25px;
+      color: #004d40;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #004d40;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.6);
+      font-size: 1em;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      box-shadow: 0 0 12px rgba(0, 183, 195, 0.7);
+    }
+
+    .contact-form button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00b4d8, #0096c7);
+      color: white;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    .contact-form button:hover {
+      background: linear-gradient(135deg, #0077b6, #023e8a);
+      box-shadow: 0 0 20px rgba(0, 183, 195, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <form class="contact-form">
+    <h2>Contact Us</h2>
+
+    <label for="name">Your Name</label>
+    <input type="text" id="name" placeholder="Enter your name" required>
+
+    <label for="email">Your Email</label>
+    <input type="email" id="email" placeholder="Enter your email" required>
+
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" placeholder="Enter subject" required>
+
+    <label for="message">Message</label>
+    <textarea id="message" rows="5" placeholder="Write your message..." required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+</body>
+</html>
